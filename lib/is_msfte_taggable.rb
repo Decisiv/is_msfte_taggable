@@ -25,16 +25,13 @@ module IsMsfteTaggable
     
     def self.included(klass)
       klass.class_eval do
-        include IsMsfteTaggable::TaggableMethods::InstanceMethods
+        extend ClassMethods
+        include InstanceMethods
 
-        has_many   :taggings, :as      => :taggable
+        has_many   :taggings, :class_name => 'IsMsfteTaggable::Tagging', :as => :taggable
         has_many   :tags,     :through => :taggings
         after_save :save_tags
-
-        def self.make_search_string(search_string, boolean="OR")
-          search_string.split(/ +/).map {|term| '"' + term + '*"'}.join(" #{boolean} ")
-        end
-
+        
         tag_kinds.each do |k|
           define_method("#{k}_list")  { get_tag_list(k) }
           define_method("#{k}_list=") { |new_list| set_tag_list(k, new_list) }
@@ -63,8 +60,17 @@ module IsMsfteTaggable
         }
       end
     end
+    
+    module ClassMethods
+      
+      def make_search_string(search_string, boolean="OR")
+        search_string.split(/ +/).map {|term| '"' + term + '*"'}.join(" #{boolean} ")
+      end
+      
+    end
 
     module InstanceMethods
+      
       def set_tag_list(kind, list)
         list.gsub!(/ *, */,',') unless list.is_a?(Array)
         tag_list = TagList.new(list.is_a?(Array) ? list : list.split(','))
@@ -108,6 +114,7 @@ module IsMsfteTaggable
       end
         
     end
+    
   end
 end
 

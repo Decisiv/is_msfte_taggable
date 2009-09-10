@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "is_msfte_taggable"
-  s.version = "0.0.4"
+  s.version = "0.0.5"
   s.date = "2009-09-10"
   s.summary = "Tagging with full text search for MS SQL Server"
   s.email = "gnutse@gmail.com"
