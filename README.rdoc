@@ -1,0 +1,4 @@
+= Is Msfte Taggable
+
+MS Sql Server specific tagging plugin for Rails that uses the MS Sql Server full
+text search engine.
