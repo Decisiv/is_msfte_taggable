@@ -1,6 +1,9 @@
-[master]
 
-*
+[3.2.0]
+
+* Support ActiveRecord 3.2.0
+
 
 [0.0.1]
+
 * (14 Apr 2009) Gemified
