@@ -38,7 +38,7 @@ module IsMsfteTaggable
             else
               start_condition = "id IN (SELECT taggable_id FROM #{Tagging.table_name}, #{Tag.table_name}  
                 WHERE #{Tagging.table_name}.taggable_type = '#{klass.name}' AND #{Tagging.table_name}.tag_id = #{Tag.table_name}.id AND
-                CONTAINS (#{Tag.table_name}.name, '#{make_search_string(tag_or_tags, 'OR')}*'))"
+                CONTAINS (#{Tag.table_name}.name, '#{make_search_string(tag_or_tags, 'OR')}'))"
               { :conditions => start_condition }
             end
           }
@@ -50,7 +50,7 @@ module IsMsfteTaggable
           else
             start_condition = "id IN (SELECT taggable_id FROM #{Tagging.table_name}, #{Tag.table_name}  
               WHERE #{Tagging.table_name}.taggable_type = '#{klass.name}' AND #{Tagging.table_name}.tag_id = #{Tag.table_name}.id AND
-              CONTAINS (#{Tag.table_name}.name, '#{make_search_string(tag_or_tags,'OR')}*'))"
+              CONTAINS (#{Tag.table_name}.name, '#{make_search_string(tag_or_tags,'OR')}'))"
             { :conditions => start_condition }
           end
         }
@@ -61,7 +61,7 @@ module IsMsfteTaggable
     module ClassMethods
       
       def make_search_string(search_string, boolean="OR")
-        search_string.split(/ +/).map {|term| '"' + term + '*"'}.join(" #{boolean} ")
+        search_string.split(/ +/).map {|term| '"' + term + ' *"'}.join(" #{boolean} ")
       end
       
     end
